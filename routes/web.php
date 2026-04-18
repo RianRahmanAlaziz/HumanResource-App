@@ -8,8 +8,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
