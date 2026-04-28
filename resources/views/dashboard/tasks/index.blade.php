@@ -35,6 +35,8 @@
                         {{-- @if (session('role') == 'HR')
                             <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3 ms-auto">New Task</a>
                         @endif --}}
+
+                        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3 ms-auto">New Task</a>
                     </div>
 
                     @if (session('success'))
@@ -70,7 +72,6 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-info btn-sm" href="{{ route('tasks.show', $task->id) }}">View</a>
-
                                         @if ($task->status == 'pending')
                                             <a class="btn btn-success btn-sm"
                                                 href="{{ route('tasks.done', $task->id) }}">Mark as Done</a>

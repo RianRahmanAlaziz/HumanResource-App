@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::all();
+        return view('dashboard.tasks.create', compact('employees'));
     }
 
     /**
@@ -30,7 +32,17 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'assigned_to' => 'required|exists:employees,id',
+            'due_date' => 'required|date',
+            'status' => 'required|string',
+        ]);
+
+        Task::create($validated);
+
+        return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
     }
 
     /**
