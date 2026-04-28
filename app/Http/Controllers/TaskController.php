@@ -50,7 +50,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('dashboard.tasks.show', compact('task'));
     }
 
     /**
@@ -80,11 +80,32 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 
+    public function done(int $id)
+    {
+        $task = Task::find($id);
+        $task->update(['status' => 'done']);
+
+        return redirect()->route('tasks.index')->with('success', 'Task marked as done.');
+    }
+
+    /**
+     * Update task status.
+     */
+    public function pending(int $id)
+    {
+        $task = Task::find($id);
+        $task->update(['status' => 'pending']);
+
+        return redirect()->route('tasks.index')->with('success', 'Task marked as pending.');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
 }

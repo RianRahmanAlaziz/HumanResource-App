@@ -79,8 +79,7 @@
                                             <a class="btn btn-warning btn-sm"
                                                 href="{{ route('tasks.pending', $task->id) }}">Mark as Pending</a>
                                         @endif
-                                        <a class="btn btn-warning btn-sm"
-                                            href="{{ route('tasks.edit', $task->id) }}">Edit</a>
+
                                         {{-- @if (session('role') == 'HR')
                                             <a class="btn btn-warning btn-sm"
                                                 href="{{ route('tasks.edit', $task->id) }}">Edit</a>
