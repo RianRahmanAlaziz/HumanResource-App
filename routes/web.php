@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,6 +10,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Resource routes for tasks
+Route::resource('tasks', TaskController::class);
+Route::get('tasks/done/{id}', [TaskController::class, 'done'])->name('tasks.done');
+Route::get('tasks/pending/{id}', [TaskController::class, 'pending'])->name('tasks.pending');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
