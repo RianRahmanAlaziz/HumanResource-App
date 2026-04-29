@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Resource routes for departments
 Route::resource('departments', DepartmentController::class);
+
+// Resource routes for roles
+Route::resource('roles', RoleController::class);
 
 // Resource routes for employees
 Route::resource('employees', EmployeeController::class);
