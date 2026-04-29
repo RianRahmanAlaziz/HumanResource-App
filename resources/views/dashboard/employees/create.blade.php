@@ -91,8 +91,8 @@
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
                             <select name="status" id="status" class="form-control" required>
-                                <option value="Inactive">Inactive</option>
-                                <option value="non active">Non Active</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
                             </select>
                         </div>
 

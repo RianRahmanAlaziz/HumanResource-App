@@ -12,7 +12,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = Department::all();
+        return view('dashboard.departments.index', compact('departments'));
     }
 
     /**
@@ -20,7 +21,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.departments.create');
     }
 
     /**
@@ -28,38 +29,60 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|max:50',
+        ]);
+
+        Department::create($request->all());
+
+        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show($id)
     {
-        //
+        $department = Department::findOrFail($id);
+        return view('dashboard.departments.show', compact('department'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit($id)
     {
-        //
+        $department = Department::findOrFail($id);
+        return view('dashboard.departments.edit', compact('department'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request,  $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string|max:50',
+        ]);
+
+        $department = Department::findOrFail($id);
+        $department->update($request->all());
+
+        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy($id)
     {
-        //
+        $department = Department::findOrFail($id);
+        $department->delete();
+
+        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
     }
 }
