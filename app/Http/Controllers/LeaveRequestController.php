@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
+use App\Models\Employee;
 
 class LeaveRequestController extends Controller
 {
@@ -12,7 +13,13 @@ class LeaveRequestController extends Controller
      */
     public function index()
     {
-        //
+        if (session('role')  == 'HR') {
+            $leaveRequests = LeaveRequest::all();
+        } else {
+            $leaveRequests = LeaveRequest::where('employee_id', session('employee_id'))->get();
+        }
+
+        return view('dashboard.leave_requests.index', compact('leaveRequests'));
     }
 
     /**
@@ -20,7 +27,8 @@ class LeaveRequestController extends Controller
      */
     public function create()
     {
-        //
+        $employees = Employee::all();
+        return view('dashboard.leave_requests.create', compact('employees'));
     }
 
     /**
@@ -28,7 +36,24 @@ class LeaveRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (session('role') != 'HR') {
+            // Kalau bukan HR, maka employee_id diambil dari session.
+            $request->merge(['employee_id' => session('employee_id')]);
+        }
+
+        // Ketika pertama kali membuat request cuti, statusnya adalah pending
+        $request->merge(['status' => 'pending']);
+
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'leave_type' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        LeaveRequest::create($request->all());
+
+        return redirect()->route('leave-requests.index')->with('success', 'Leave Request Created Successfully');
     }
 
     /**
@@ -36,7 +61,7 @@ class LeaveRequestController extends Controller
      */
     public function show(LeaveRequest $leaveRequest)
     {
-        //
+        return view('dashboard.leave_requests.show', compact('leaveRequest'));
     }
 
     /**
@@ -44,7 +69,10 @@ class LeaveRequestController extends Controller
      */
     public function edit(LeaveRequest $leaveRequest)
     {
-        //
+        $employees = Employee::all();
+        $statuses = ['pending', 'confirmed', 'rejected'];
+
+        return view('dashboard.leave_requests.edit', compact('leaveRequest', 'employees', 'statuses'));
     }
 
     /**
@@ -52,14 +80,44 @@ class LeaveRequestController extends Controller
      */
     public function update(Request $request, LeaveRequest $leaveRequest)
     {
-        //
+        $request->validate([
+            'employee_id' => 'required|exists:employees,id',
+            'leave_type' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'required|string',
+        ]);
+
+        $leaveRequest->update($request->all());
+
+        return redirect()->route('leave-requests.index')->with('success', 'Leave Request Updated Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function confirm(int $id)
+    {
+        LeaveRequest::findOrFail($id)->update([
+            'status' => 'confirmed',
+        ]);
+
+        // Jika sudah diconfirm, masukan dalam absensi jenis cuti.
+
+
+        return redirect()->route('leave-requests.index')->with('success', 'Leave Request Updated Successfully');
+    }
+
+    public function reject(int $id)
+    {
+        LeaveRequest::findOrFail($id)->update([
+            'status' => 'rejected',
+        ]);
+
+        return redirect()->route('leave-requests.index')->with('success', 'Leave Request Updated Successfully');
+    }
+
     public function destroy(LeaveRequest $leaveRequest)
     {
-        //
+        $leaveRequest->delete();
+
+        return redirect()->route('leave-requests.index')->with('success', 'Leave Request Deleted Successfully');
     }
 }

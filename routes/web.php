@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +37,10 @@ Route::resource('tasks', TaskController::class);
 Route::get('tasks/done/{id}', [TaskController::class, 'done'])->name('tasks.done');
 Route::get('tasks/pending/{id}', [TaskController::class, 'pending'])->name('tasks.pending');
 
+// Resource routes for leave requests
+Route::resource('leave-requests', LeaveRequestController::class);
+Route::get('leave-requests/confirm/{id}', [LeaveRequestController::class, 'confirm'])->name('leave-requests.confirm');
+Route::get('leave-requests/reject/{id}', [LeaveRequestController::class, 'reject'])->name('leave-requests.reject');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
