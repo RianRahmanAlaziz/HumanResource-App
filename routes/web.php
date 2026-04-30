@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -23,6 +24,9 @@ Route::resource('roles', RoleController::class);
 
 // Resource routes for presences (attendance)
 Route::resource('presences', PresenceController::class);
+
+// Resource routes for payroll
+Route::resource('payrolls', PayrollController::class);
 
 // Resource routes for employees
 Route::resource('employees', EmployeeController::class);
