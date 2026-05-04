@@ -78,7 +78,7 @@
                                     </td>
 
                                     <td>
-                                        @if (session('role') == 'HR')
+                                        @if (session('role') === 'HR')
                                             <a href="{{ route('presences.edit', $attendance->id) }}"
                                                 class="btn btn-warning btn-sm">Edit</a>
                                             <form action="{{ route('presences.destroy', $attendance->id) }}" method="POST"

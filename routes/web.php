@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:Developer,HR,Sales,Data Entry']);
         Route::get('/presence', [DashboardController::class, 'presence']);
 
         // Resource routes for departments
@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('tasks/pending/{id}', [TaskController::class, 'pending'])->name('tasks.pending');
 
         // Resource routes for presences (attendance)
-        Route::resource('presences', PresenceController::class)->middleware(['role:Developer,HR']);
+        Route::resource('presences', PresenceController::class)->middleware(['role:Developer,HR,Sales']);
 
         // Resource routes for payroll
         Route::resource('payrolls', PayrollController::class)->middleware(['role:Developer,HR']);

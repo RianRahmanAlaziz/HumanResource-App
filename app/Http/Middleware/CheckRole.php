@@ -16,19 +16,30 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string ...$roles)
     {
-        // Dapatkan employee id nya.
+        if (!auth()->check()) {
+            abort(401, 'Unauthenticated');
+        }
+
         $employeeID = auth()->user()->employee_id;
 
-        // Cari tahu rolenya.
         $employee = Employee::find($employeeID);
 
-        // Daftarkan rolenya ke dalam session.
-        $request->session()->put('role', $employee->role->title);
+        if (!$employee) {
+            abort(404, 'Employee not found');
+        }
+
+        if (!$employee->role) {
+            abort(403, 'Role not assigned');
+        }
+
+        $roleTitle = $employee->role->title;
+
+        // Simpan ke session
+        $request->session()->put('role', $roleTitle);
         $request->session()->put('employee_id', $employee->id);
 
-        // Jika rolenya tidak sesuai, maka kembalikan response 403.
-        if (!in_array($employee->role->title, $roles)) {
-            abort(403, 'Unauthorized action.'); // Return 403 if the role doesn't match
+        if (!in_array($roleTitle, $roles)) {
+            abort(403, 'Unauthorized action.');
         }
 
         return $next($request);

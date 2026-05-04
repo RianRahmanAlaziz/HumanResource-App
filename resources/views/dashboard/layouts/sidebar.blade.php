@@ -45,7 +45,7 @@
              <ul class="menu">
                  <li class="sidebar-title">Menu</li>
 
-                 @if (session('role') == 'HR')
+                 @if (session('role') === 'HR')
                      <li class="sidebar-item">
                          <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                              <i class="bi bi-grid-fill"></i>
@@ -103,7 +103,7 @@
                  @endif
 
 
-                 @if (session('role') == 'Developer')
+                 @if (session('role') === 'Developer')
                      <li class="sidebar-item">
                          <a href="{{ url('/dashboard/presences') }}" class='sidebar-link'>
                              <i class="bi bi-table"></i>

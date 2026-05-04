@@ -15,7 +15,12 @@ class PresenceController extends Controller
      */
     public function index()
     {
-        $attendances = Presence::all();
+        if (session('role')  == 'HR') {
+            $attendances = Presence::with('employee')->get();
+        } else {
+            $attendances = Presence::with('employee')->where('employee_id', session('employee_id'))->get();
+        }
+
 
         return view('dashboard.presences.index', compact('attendances'));
     }

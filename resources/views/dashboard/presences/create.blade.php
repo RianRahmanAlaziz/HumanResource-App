@@ -83,11 +83,11 @@
                         </form>
                     @else
                         <!--
-                        Employee
-                        
-                        Disini gak usah repot repot bikin field status dst, langsung aja input location.
-                        Nnt kita handle di backendnya, kalo locationnya sesuai dengan lokasi kantor, maka statusnya present, selain itu statusnya absent.
-                        -->
+                                    Employee
+                                    
+                                    Disini gak usah repot repot bikin field status dst, langsung aja input location.
+                                    Nnt kita handle di backendnya, kalo locationnya sesuai dengan lokasi kantor, maka statusnya present, selain itu statusnya absent.
+                                    -->
                         <form action="{{ route('presences.store') }}" method="POST">
                             @csrf
 
@@ -127,8 +127,8 @@
         // const threshold = 0.01; // Threshold for distance comparison
 
         // Latitude for Office.
-        const officeLat = -6.8911104;
-        const officeLon = 107.544576;
+        const officeLat = -6.200000;
+        const officeLon = 106.816666;
         const threshold = 0.01;
 
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -154,7 +154,7 @@
                     } else {
                         alert(
                             "Kamu tidak berada di kantor, presensi tidak diterima. Refresh ulang jendela ini / hubungi admin jika ada kesalahan"
-                            );
+                        );
                     }
                 }, function(error) {
                     console.error("Error Code = " + error.code + " - " + error.message);

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
 use Carbon\Carbon;
 
@@ -22,9 +23,29 @@ class HumanResourceSeeder extends Seeder
 
         // Seed Roles table
         DB::table('roles')->insert([
-            ['title' => 'Manager', 'description' => 'Handles team management', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['title' => 'Developer', 'description' => 'Handles software development', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['title' => 'Salesperson', 'description' => 'Handles sales and client communication', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['title' => 'HR', 'description' => 'Role Human Resources',  'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['title' => 'Developer', 'description' => 'Handling Code',  'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['title' => 'Sales', 'description' => 'Handling Sales and Marketing',  'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+
+        ]);
+
+        DB::table('users')->insert([
+            [
+                'name' => 'Admin HR',
+                'email' => 'admin@hr.com',
+                'password' => Hash::make('password'), // default password
+                'employee_id' => 1, // relasi ke employee
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Developer User',
+                'email' => 'dev@hr.com',
+                'password' => Hash::make('password'),
+                'employee_id' => 2,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
 
         // Seed Employees table
