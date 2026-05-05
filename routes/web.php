@@ -12,12 +12,12 @@ use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:Developer,HR,Sales']);
         Route::get('/presence-data', [DashboardController::class, 'presence'])->name('dashboard.presence-data');
 
         // Resource routes for departments

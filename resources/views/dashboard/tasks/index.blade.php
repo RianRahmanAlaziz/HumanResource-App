@@ -78,7 +78,7 @@
                                                 href="{{ route('tasks.pending', $task->id) }}">Mark as Pending</a>
                                         @endif
 
-                                        {{-- @if (session('role') == 'HR')
+                                        @if (session('role') == 'HR')
                                             <a class="btn btn-warning btn-sm"
                                                 href="{{ route('tasks.edit', $task->id) }}">Edit</a>
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
@@ -87,7 +87,7 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                             </form>
-                                        @endif --}}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
