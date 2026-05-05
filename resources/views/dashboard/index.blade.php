@@ -19,7 +19,7 @@
                         <div class="card">
                             <div class="card-body px-4 py-4-5">
                                 <div class="row">
-                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                    <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                         <div class="stats-icon purple mb-2">
                                             <i class="icon dripicons dripicons-tag"></i>
                                         </div>
@@ -85,26 +85,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Presence</h4>
+                                <h4>Latest Presence</h4>
                             </div>
                             <div class="card-body">
                                 <canvas id="presence"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Payroll</h4>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="payroll"></canvas>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -119,6 +110,7 @@
                                             <tr>
                                                 <th>Employee</th>
                                                 <th>Detail</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -137,6 +129,14 @@
                                                     <td class="col-auto">
                                                         <p class=" mb-0">{{ $task->title }}</p>
                                                     </td>
+                                                    <td>
+                                                        @if ($task->status == 'pending')
+                                                            <span class="text-warning">Pending</span>
+                                                        @elseif($task->status == 'done')
+                                                            <span class="text-success">Done</span>
+                                                        @elseif($task->status == 'in-progress')
+                                                            <span class="text-info">On Progress</span>
+                                                        @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>

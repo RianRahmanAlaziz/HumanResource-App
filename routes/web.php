@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/presence', [DashboardController::class, 'presence']);
+        Route::get('/presence-data', [DashboardController::class, 'presence'])->name('dashboard.presence-data');
 
         // Resource routes for departments
         Route::resource('departments', DepartmentController::class)->middleware(['role:HR']);

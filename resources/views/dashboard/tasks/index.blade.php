@@ -32,11 +32,9 @@
                 <div class="card-body">
 
                     <div class="d-flex">
-                        {{-- @if (session('role') == 'HR')
+                        @if (session('role') == 'HR')
                             <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3 ms-auto">New Task</a>
-                        @endif --}}
-
-                        <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3 ms-auto">New Task</a>
+                        @endif
                     </div>
 
                     @if (session('success'))

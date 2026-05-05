@@ -69,6 +69,52 @@
             minTime: "07:00",
             maxTime: "21:00"
         });
+
+        var ctxBar = document.getElementById('presence').getContext('2d');
+        var myBar = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                    'October', 'November', 'December'
+                ],
+                datasets: [{
+                    label: 'Total',
+                    data: [],
+                    backgroundColor: 'rgba(63, 82, 227, 1)',
+                    borderColor: '#57CAEB',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Latest Presence'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function updateData() {
+            fetch('/dashboard/presence-data')
+                .then(response => response.json())
+                .then(output => {
+                    myBar.data.datasets = [{
+                        label: 'Total',
+                        data: output,
+                        backgroundColor: 'rgba(63, 82, 227, 1)',
+                        borderColor: '#57CAEB',
+                    }];
+                    myBar.update();
+                })
+                .catch(error => console.error('Error fetching presence data:', error));
+        }
+
+        updateData();
     </script>
 
     <!-- Need: Apexcharts -->
