@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Employee;
+use App\Models\Payroll;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Presence;
@@ -10,9 +13,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $employees = Employee::count();
+        $departments = Department::count();
+        $payroll = Payroll::count();
+        $presences = Presence::count();
         $tasks = Task::all();
 
-        return view('dashboard.index', compact('tasks'));
+        return view('dashboard.index', compact('tasks', 'employees', 'departments', 'payroll', 'presences'));
     }
 
 
